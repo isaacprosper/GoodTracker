@@ -1,0 +1,723 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ship a Package | WorldLink</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff6a00;
+            --primary-light: #ff8533;
+            --primary-dark: #e55a00;
+            --secondary: #333;
+            --text: #333;
+            --text-light: #666;
+            --text-lighter: #999;
+            --bg: #f5f5f5;
+            --bg-white: #fff;
+            --border: #e5e5e5;
+            --success: #52c41a;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .top-bar {
+            background: #2c2c2c;
+            color: #fff;
+            padding: 0.5rem 0;
+            font-size: 0.875rem;
+        }
+
+        .top-bar-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .main-header {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.5rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .logo-text span {
+            color: var(--primary);
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-item {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 1.5rem 0;
+            position: relative;
+        }
+
+        .nav-item:hover,
+        .nav-item.active {
+            color: var(--primary);
+        }
+
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary);
+        }
+
+        .btn-outline {
+            padding: 0.625rem 1.25rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            padding: 0.625rem 1.25rem;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 3rem 0;
+            color: #fff;
+        }
+
+        .page-header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-header p {
+            color: rgba(255,255,255,0.7);
+        }
+
+        /* Shipping Form */
+        .shipping-container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .shipping-card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .shipping-steps {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .step {
+            flex: 1;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .step.active {
+            background: rgba(255,106,0,0.05);
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: var(--border);
+            color: var(--text-light);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .step.active .step-number {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .step-title {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .step.active .step-title {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .shipping-form {
+            padding: 2rem;
+        }
+
+        .form-section {
+            margin-bottom: 2rem;
+        }
+
+        .form-section h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text);
+        }
+
+        .form-section h3 i {
+            color: var(--primary);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 0.875rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .package-types {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .package-type {
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .package-type:hover,
+        .package-type.active {
+            border-color: var(--primary);
+            background: rgba(255,106,0,0.05);
+        }
+
+        .package-type i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .package-type h4 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .package-type p {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .service-options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .service-option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .service-option:hover,
+        .service-option.active {
+            border-color: var(--primary);
+            background: rgba(255,106,0,0.05);
+        }
+
+        .service-option input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+        }
+
+        .service-info {
+            flex: 1;
+        }
+
+        .service-info h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .service-info p {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+
+        .service-features {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-lighter);
+            margin-top: 0.5rem;
+        }
+
+        .service-price {
+            text-align: right;
+        }
+
+        .service-price .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .service-price .delivery {
+            font-size: 0.875rem;
+            color: var(--success);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .btn-back {
+            padding: 0.875rem 2rem;
+            border: 1px solid var(--border);
+            background: #fff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-submit {
+            padding: 0.875rem 3rem;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-submit:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Quote Result */
+        .quote-result {
+            display: none;
+            background: rgba(82,196,26,0.05);
+            border: 1px solid var(--success);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .quote-result.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .quote-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--success);
+            margin: 1rem 0;
+        }
+
+        /* Footer */
+        .main-footer {
+            background: #1a1a1a;
+            color: #fff;
+            padding: 3rem 0 0;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding: 2rem 0;
+            margin-top: 2rem;
+            text-align: center;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .main-nav {
+                display: none;
+            }
+
+            .form-grid,
+            .package-types {
+                grid-template-columns: 1fr;
+            }
+
+            .service-option {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .service-price {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <div class="top-bar-container">
+            <div>For Business | For Consumers | Partners</div>
+            <div>Staff Portal | English <i class="fas fa-chevron-down"></i></div>
+        </div>
+    </div>
+
+    <header class="main-header">
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon"><i class="fas fa-box-open"></i></div>
+                <div class="logo-text">World<span>Link</span></div>
+            </a>
+            <nav class="main-nav">
+                <a href="index.html" class="nav-item">Home</a>
+                <a href="ship.html" class="nav-item active">Ship Now</a>
+                <a href="services.html" class="nav-item">Services</a>
+                <a href="locations.html" class="nav-item">Locations</a>
+                <a href="support.html" class="nav-item">Support</a>
+            </nav>
+            <div>
+                <a href="#" class="btn-outline">Sign In</a>
+                <a href="ship.html" class="btn-primary">Get Quote</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="page-header">
+        <div class="page-header-container">
+            <h1>Ship Your Package</h1>
+            <p>Get instant quotes and book your shipment online</p>
+        </div>
+    </div>
+
+    <div class="shipping-container">
+        <div class="shipping-card">
+            <div class="shipping-steps">
+                <div class="step active">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Shipment Details</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Select Service</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Confirm & Pay</div>
+                </div>
+            </div>
+
+            <form class="shipping-form" onsubmit="getQuote(event)">
+                <div class="form-section">
+                    <h3><i class="fas fa-map-marker-alt"></i> Where are you shipping?</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>From Country</label>
+                            <select id="fromCountry">
+                                <option>South Africa</option>
+                                <option>United States</option>
+                                <option>United Kingdom</option>
+                                <option>United Arab Emirates</option>
+                                <option>Germany</option>
+                                <option>China</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>From City</label>
+                            <input type="text" placeholder="Enter city" value="Cape Town">
+                        </div>
+                        <div class="form-group">
+                            <label>To Country</label>
+                            <select id="toCountry">
+                                <option>United States</option>
+                                <option>South Africa</option>
+                                <option>United Kingdom</option>
+                                <option>United Arab Emirates</option>
+                                <option>Germany</option>
+                                <option>China</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>To City</label>
+                            <input type="text" placeholder="Enter city" value="New York">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><i class="fas fa-box"></i> Package Details</h3>
+                    <div class="package-types">
+                        <div class="package-type active" onclick="selectPackage(this)">
+                            <i class="fas fa-file-alt"></i>
+                            <h4>Documents</h4>
+                            <p>Up to 0.5 kg</p>
+                        </div>
+                        <div class="package-type" onclick="selectPackage(this)">
+                            <i class="fas fa-box"></i>
+                            <h4>Small Package</h4>
+                            <p>Up to 2 kg</p>
+                        </div>
+                        <div class="package-type" onclick="selectPackage(this)">
+                            <i class="fas fa-cube"></i>
+                            <h4>Medium Box</h4>
+                            <p>Up to 10 kg</p>
+                        </div>
+                        <div class="package-type" onclick="selectPackage(this)">
+                            <i class="fas fa-pallet"></i>
+                            <h4>Large/Freight</h4>
+                            <p>10+ kg</p>
+                        </div>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Weight (kg)</label>
+                            <input type="number" id="weight" step="0.1" value="2.5">
+                        </div>
+                        <div class="form-group">
+                            <label>Dimensions (cm)</label>
+                            <input type="text" placeholder="L × W × H" value="30 × 20 × 15">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><i class="fas fa-shipping-fast"></i> Select Service</h3>
+                    <div class="service-options">
+                        <div class="service-option active">
+                            <input type="radio" name="service" checked>
+                            <div class="service-info">
+                                <h4>Express Worldwide</h4>
+                                <p>Fastest delivery with full tracking</p>
+                                <div class="service-features">
+                                    <span><i class="fas fa-check"></i> 2-3 business days</span>
+                                    <span><i class="fas fa-check"></i> Full tracking</span>
+                                    <span><i class="fas fa-check"></i> Insurance included</span>
+                                </div>
+                            </div>
+                            <div class="service-price">
+                                <div class="price">$89.00</div>
+                                <div class="delivery"><i class="fas fa-clock"></i> Delivery by Oct 30</div>
+                            </div>
+                        </div>
+                        <div class="service-option">
+                            <input type="radio" name="service">
+                            <div class="service-info">
+                                <h4>Standard International</h4>
+                                <p>Reliable delivery at great value</p>
+                                <div class="service-features">
+                                    <span><i class="fas fa-check"></i> 5-7 business days</span>
+                                    <span><i class="fas fa-check"></i> Full tracking</span>
+                                    <span><i class="fas fa-check"></i> Insurance included</span>
+                                </div>
+                            </div>
+                            <div class="service-price">
+                                <div class="price">$45.00</div>
+                                <div class="delivery"><i class="fas fa-clock"></i> Delivery by Nov 3</div>
+                            </div>
+                        </div>
+                        <div class="service-option">
+                            <input type="radio" name="service">
+                            <div class="service-info">
+                                <h4>Economy Freight</h4>
+                                <p>Most cost-effective for large shipments</p>
+                                <div class="service-features">
+                                    <span><i class="fas fa-check"></i> 10-15 business days</span>
+                                    <span><i class="fas fa-check"></i> Basic tracking</span>
+                                    <span><i class="fas fa-check"></i> Insurance optional</span>
+                                </div>
+                            </div>
+                            <div class="service-price">
+                                <div class="price">$28.00</div>
+                                <div class="delivery"><i class="fas fa-clock"></i> Delivery by Nov 10</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-back">Back</button>
+                    <button type="submit" class="btn-submit">
+                        Get Quote <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+
+                <div id="quoteResult" class="quote-result">
+                    <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--success);"></i>
+                    <h3>Quote Generated Successfully!</h3>
+                    <div class="quote-price">$89.00</div>
+                    <p>Express Worldwide from Cape Town to New York</p>
+                    <p>Estimated delivery: <strong>October 30, 2024</strong></p>
+                    <button class="btn-primary" style="margin-top: 1.5rem; padding: 1rem 3rem;">
+                        Proceed to Book <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-bottom">
+                <p>&copy; 2024 WorldLink Global Logistics. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function selectPackage(el) {
+            document.querySelectorAll('.package-type').forEach(p => p.classList.remove('active'));
+            el.classList.add('active');
+        }
+
+        document.querySelectorAll('.service-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.service-option').forEach(o => o.classList.remove('active'));
+                this.classList.add('active');
+                this.querySelector('input[type="radio"]').checked = true;
+            });
+        });
+
+        function getQuote(e) {
+            e.preventDefault();
+            document.getElementById('quoteResult').classList.add('active');
+            document.getElementById('quoteResult').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html> -->

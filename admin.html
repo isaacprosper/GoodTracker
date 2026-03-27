@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal | WorldLink Global Logistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0f172a;
+            --primary-light: #1e293b;
+            --accent: #f59e0b;
+            --accent-hover: #d97706;
+            --success: #10b981;
+            --info: #3b82f6;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --dark: #020617;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary);
+            color: var(--light);
+            min-height: 100vh;
+        }
+
+        /* Login Screen */
+        .login-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .login-box {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem;
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        .login-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .login-box h2 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-box p {
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: rgba(15, 23, 42, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .login-input:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            color: var(--primary);
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .login-error {
+            color: var(--danger);
+            margin-top: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .login-hint {
+            color: var(--gray);
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+        }
+
+        /* Dashboard Layout */
+        .dashboard {
+            display: none;
+        }
+
+        .dashboard.active {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: var(--primary-light);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .sidebar-brand-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--accent);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.25rem;
+        }
+
+        .sidebar-brand-text h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .sidebar-brand-text span {
+            font-size: 0.75rem;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 1.5rem 1rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 1.25rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--accent);
+        }
+
+        .nav-item i {
+            width: 24px;
+        }
+
+        .sidebar-footer {
+            padding: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .stat-icon.blue { background: rgba(59, 130, 246, 0.1); color: var(--info); }
+        .stat-icon.orange { background: rgba(245, 158, 11, 0.1); color: var(--accent); }
+        .stat-icon.green { background: rgba(16, 185, 129, 0.1); color: var(--success); }
+        .stat-icon.red { background: rgba(239, 68, 68, 0.1); color: var(--danger); }
+
+        .stat-info h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-info span {
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        /* Panels */
+        .panel {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .panel-header h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .panel-header h3 i {
+            color: var(--accent);
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding: 0.625rem 1rem 0.625rem 2.5rem;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            width: 250px;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 0.875rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        /* Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            font-size: 0.875rem;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 0.875rem 1rem;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.95rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .btn-primary {
+            padding: 0.875rem 1.5rem;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+            color: var(--primary);
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+
+        .form-actions {
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        /* Shipments Table */
+        .shipments-list {
+            padding: 1rem;
+        }
+
+        .shipment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem;
+            background: rgba(15, 23, 42, 0.5);
+            border-radius: 10px;
+            margin-bottom: 0.75rem;
+            border-left: 4px solid var(--accent);
+        }
+
+        .shipment-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .shipment-info p {
+            color: var(--gray);
+            font-size: 0.875rem;
+        }
+
+        .shipment-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .btn-edit {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--info);
+        }
+
+        .btn-edit:hover {
+            background: rgba(59, 130, 246, 0.2);
+        }
+
+        .btn-link {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+
+        .btn-link:hover {
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-delete {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+
+        .btn-delete:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: rgba(30, 41, 59, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .modal h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.25rem;
+        }
+
+        .modal .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+
+        .btn-secondary {
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .shipment-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-box">
+            <div class="login-logo">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h2>Staff Portal</h2>
+            <p>Authorized personnel only</p>
+            <input type="password" id="adminPass" class="login-input" placeholder="Enter access code" onkeypress="if(event.key==='Enter')login()">
+            <button class="login-btn" onclick="login()">Access System</button>
+            <div class="login-error" id="loginError"></div>
+            <!-- <div class="login-hint">Access code: worldlink2024</div> -->
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-brand">
+                    <div class="sidebar-brand-icon">
+                        <i class="fas fa-globe-americas"></i>
+                    </div>
+                    <div class="sidebar-brand-text">
+                        <h3>WorldLink</h3>
+                        <span>Admin Portal</span>
+                    </div>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-box"></i>
+                    <span>Shipments</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-plus-circle"></i>
+                    <span>New Shipment</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-users"></i>
+                    <span>Customers</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Shipment Management</h1>
+                <div class="user-menu">
+                    <span>Administrator</span>
+                    <div class="user-avatar">A</div>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="statTotal">0</h3>
+                        <span>Total Shipments</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="statTransit">0</h3>
+                        <span>In Transit</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="statDelivered">0</h3>
+                        <span>Delivered</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon red">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="statPending">0</h3>
+                        <span>Pending</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-plus-circle"></i> Create New Shipment</h3>
+                </div>
+                <form id="createForm" onsubmit="createShipment(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Tracking Number</label>
+                            <input type="text" id="newId" placeholder="WLK-ZA-000001" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Customer Name</label>
+                            <input type="text" id="newCustomer" placeholder="Full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Country Code</label>
+                            <select id="newCountry" onchange="updateCities()">
+                                <option value="ZA">South Africa (ZA)</option>
+                                <option value="US">United States (US)</option>
+                                <option value="UK">United Kingdom (UK)</option>
+                                <option value="AE">UAE (AE)</option>
+                                <option value="DE">Germany (DE)</option>
+                                <option value="CN">China (CN)</option>
+                                <option value="IN">India (IN)</option>
+                                <option value="AU">Australia (AU)</option>
+                                <option value="BR">Brazil (BR)</option>
+                                <option value="CA">Canada (CA)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Origin City</label>
+                            <select id="newOrigin"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Destination City</label>
+                            <select id="newDest"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Status</label>
+                            <select id="newStatus" onchange="updateLocations()">
+                                <option value="pending">Pending Pickup</option>
+                                <option value="picked">Picked Up</option>
+                                <option value="facility">At Facility</option>
+                                <option value="transit" selected>In Transit</option>
+                                <option value="customs">Customs Clearance</option>
+                                <option value="local">At Local Facility</option>
+                                <option value="out">Out for Delivery</option>
+                                <option value="delivered">Delivered</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Current Location</label>
+                            <select id="newLocation"></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Estimated Delivery</label>
+                            <input type="date" id="newDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Weight (kg)</label>
+                            <input type="number" id="newWeight" step="0.1" value="2.5">
+                        </div>
+                        <div class="form-group">
+                            <label>Service Type</label>
+                            <select id="newService">
+                                <option>Express Worldwide</option>
+                                <option>Priority International</option>
+                                <option>Standard Ground</option>
+                                <option>Economy Freight</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-plus"></i> Create Shipment
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-list"></i> All Shipments</h3>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchInput" placeholder="Search tracking number..." onkeyup="searchShipments()">
+                    </div>
+                </div>
+                <div class="shipments-list" id="shipmentsList">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal-overlay">
+        <div class="modal">
+            <h3>Update Shipment</h3>
+            <input type="hidden" id="editId">
+            <div class="form-group">
+                <label>New Status</label>
+                <select id="editStatus" onchange="updateEditLocations()">
+                    <option value="pending">Pending Pickup</option>
+                    <option value="picked">Picked Up</option>
+                    <option value="facility">At Facility</option>
+                    <option value="transit">In Transit</option>
+                    <option value="customs">Customs Clearance</option>
+                    <option value="local">At Local Facility</option>
+                    <option value="out">Out for Delivery</option>
+                    <option value="delivered">Delivered</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>New Location</label>
+                <select id="editLocation"></select>
+            </div>
+            <div class="form-group">
+                <label>Update Note</label>
+                <input type="text" id="editNote" placeholder="e.g., Arrived at customs facility">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn-primary" onclick="saveEdit()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const globalLocations = {
+            'ZA': ['Johannesburg', 'Cape Town', 'Durban', 'Pretoria', 'Port Elizabeth', 'Bloemfontein'],
+            'US': ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego', 'Dallas', 'San Jose'],
+            'UK': ['London', 'Birmingham', 'Manchester', 'Leeds', 'Glasgow', 'Sheffield', 'Bradford', 'Liverpool', 'Edinburgh', 'Bristol'],
+            'AE': ['Dubai', 'Abu Dhabi', 'Sharjah', 'Al Ain', 'Ajman', 'Ras Al Khaimah'],
+            'DE': ['Berlin', 'Hamburg', 'Munich', 'Cologne', 'Frankfurt', 'Stuttgart', 'Düsseldorf'],
+            'CN': ['Shanghai', 'Beijing', 'Guangzhou', 'Shenzhen', 'Chengdu', 'Hangzhou', 'Wuhan'],
+            'IN': ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune'],
+            'AU': ['Sydney', 'Melbourne', 'Brisbane', 'Perth', 'Adelaide', 'Gold Coast'],
+            'BR': ['São Paulo', 'Rio de Janeiro', 'Brasília', 'Salvador', 'Fortaleza', 'Belo Horizonte'],
+            'CA': ['Toronto', 'Montreal', 'Vancouver', 'Calgary', 'Edmonton', 'Ottawa']
+        };
+
+        const locationOptions = {
+            pending: ['Awaiting Pickup - ', 'Label Created - '],
+            picked: ['Picked Up - ', 'Collected from - '],
+            facility: ['Processing Facility - ', 'Distribution Center - ', 'Sorting Hub - '],
+            transit: ['In Transit - ', 'En Route - ', 'Departed - '],
+            customs: ['Customs Clearance - ', 'Border Control - ', 'Import Processing - '],
+            local: ['Local Facility - ', 'Delivery Center - ', 'Last Mile Hub - '],
+            out: ['Out for Delivery - ', 'With Courier - ', 'Delivery Vehicle - '],
+            delivered: ['Delivered - Front Door', 'Delivered - Reception', 'Delivered - Safe Place', 'Delivered - Neighbor']
+        };
+
+        let packages = JSON.parse(localStorage.getItem('worldlink_packages')) || [];
+
+        function login() {
+            const pass = document.getElementById('adminPass').value;
+            if (pass === 'worldlink2024') {
+                localStorage.setItem('worldlink_admin', 'true');
+                showDashboard();
+            } else {
+                document.getElementById('loginError').textContent = 'Invalid access code';
+            }
+        }
+
+        function showDashboard() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboard').classList.add('active');
+            updateStats();
+            loadShipments();
+            updateCities();
+            updateLocations();
+            
+            // Set default date to tomorrow
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 3);
+            document.getElementById('newDate').value = tomorrow.toISOString().split('T')[0];
+        }
+
+        function logout() {
+            localStorage.removeItem('worldlink_admin');
+            location.reload();
+        }
+
+        if (localStorage.getItem('worldlink_admin') === 'true') {
+            showDashboard();
+        }
+
+        function updateCities() {
+            const country = document.getElementById('newCountry').value;
+            const cities = globalLocations[country];
+            
+            const originSelect = document.getElementById('newOrigin');
+            const destSelect = document.getElementById('newDest');
+            
+            originSelect.innerHTML = '';
+            destSelect.innerHTML = '';
+            
+            cities.forEach(city => {
+                originSelect.add(new Option(city, city));
+                destSelect.add(new Option(city, city));
+            });
+            
+            // Set different default for destination
+            if (cities.length > 1) {
+                destSelect.selectedIndex = 1;
+            }
+        }
+
+        function updateLocations() {
+            const status = document.getElementById('newStatus').value;
+            const country = document.getElementById('newCountry').value;
+            const cities = globalLocations[country];
+            const select = document.getElementById('newLocation');
+            
+            select.innerHTML = '';
+            
+            locationOptions[status].forEach(prefix => {
+                cities.forEach(city => {
+                    const option = prefix + city + (prefix.includes('Delivered') ? '' : ', ' + country);
+                    select.add(new Option(option, option));
+                });
+            });
+        }
+
+        function updateEditLocations() {
+            const status = document.getElementById('editStatus').value;
+            const pkg = packages.find(p => p.id === document.getElementById('editId').value);
+            const select = document.getElementById('editLocation');
+            
+            select.innerHTML = '';
+            
+            const cities = globalLocations[pkg.country];
+            locationOptions[status].forEach(prefix => {
+                cities.forEach(city => {
+                    const option = prefix + city + (prefix.includes('Delivered') ? '' : ', ' + pkg.country);
+                    select.add(new Option(option, option));
+                });
+            });
+        }
+
+        function createShipment(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('newId').value.toUpperCase();
+            const country = document.getElementById('newCountry').value;
+            const origin = document.getElementById('newOrigin').value;
+            const dest = document.getElementById('newDest').value;
+            const status = document.getElementById('newStatus').value;
+            const location = document.getElementById('newLocation').value;
+            
+            const newPkg = {
+                id: id,
+                customer: document.getElementById('newCustomer').value,
+                country: country,
+                status: status,
+                origin: origin,
+                destination: dest,
+                currentLocation: location,
+                locationDetail: generateLocationDetail(status),
+                estimatedDelivery: formatDate(document.getElementById('newDate').value),
+                deliveryTime: 'By 8:00 PM',
+                weight: document.getElementById('newWeight').value,
+                service: document.getElementById('newService').value,
+                progress: calculateProgress(status),
+                route: generateRoute(origin, dest, status),
+                history: generateHistory(status, location, origin)
+            };
+            
+            packages.push(newPkg);
+            savePackages();
+            
+            const link = `${window.location.origin}/index.html?track=${id}`;
+            
+            // Copy to clipboard
+            navigator.clipboard.writeText(link).then(() => {
+                alert(`Shipment created!\n\nTracking: ${id}\nLink copied to clipboard!\n\n${link}`);
+            }).catch(() => {
+                alert(`Shipment created!\n\nTracking: ${id}\n\nCustomer link:\n${link}`);
+            });
+            
+            e.target.reset();
+            updateCities();
+            updateLocations();
+            updateStats();
+            loadShipments();
+        }
+
+        function generateLocationDetail(status) {
+            const details = {
+                pending: 'Awaiting collection from shipper',
+                picked: 'Package collected and processing',
+                facility: 'Package being sorted at facility',
+                transit: 'In transit to next destination',
+                customs: 'Processing through customs clearance',
+                local: 'At local facility, preparing for delivery',
+                out: 'Out for delivery today',
+                delivered: 'Package delivered successfully'
+            };
+            return details[status] || 'Status updated';
+        }
+
+        function calculateProgress(status) {
+            const progress = { pending: 5, picked: 15, facility: 30, transit: 50, customs: 60, local: 75, out: 90, delivered: 100 };
+            return progress[status] || 10;
+        }
+
+        function generateRoute(origin, dest, status) {
+            const route = [{ city: origin, time: 'Today', completed: true }];
+            
+            if (status !== 'pending' && status !== 'picked') {
+                route.push({ city: 'In Transit', time: 'En Route', completed: ['facility', 'transit', 'customs', 'local', 'out', 'delivered'].includes(status) });
+            }
+            
+            route.push({ city: dest, time: 'Delivery', completed: status === 'delivered' });
+            return route;
+        }
+
+        function generateHistory(status, location, origin) {
+            const now = new Date();
+            const timeStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ', ' + 
+                           now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+            
+            let history = [];
+            
+            if (status === 'pending') {
+                history.push({ time: timeStr, location: origin, status: 'Label Created', completed: true, note: 'Shipment registered, awaiting pickup' });
+            } else if (status === 'picked') {
+                history.push({ time: timeStr, location: origin, status: 'Picked Up', completed: true, note: 'Collected from sender' });
+            } else if (status === 'facility') {
+                history.push({ time: timeStr, location: location, status: 'At Facility', completed: true, note: 'Package processing initiated' });
+            } else if (status === 'transit') {
+                history.push({ time: timeStr, location: location, status: 'In Transit', completed: false, note: 'Moving to next destination' });
+            } else if (status === 'customs') {
+                history.push({ time: timeStr, location: location, status: 'Customs Clearance', completed: false, note: 'Processing customs documentation' });
+            } else if (status === 'local') {
+                history.push({ time: timeStr, location: location, status: 'At Local Facility', completed: true, note: 'Preparing for final delivery' });
+            } else if (status === 'out') {
+                history.push({ time: timeStr, location: location, status: 'Out for Delivery', completed: false, note: 'With delivery courier' });
+            } else if (status === 'delivered') {
+                history.push({ time: timeStr, location: location, status: 'Delivered', completed: true, note: 'Package delivered successfully' });
+            }
+            
+            return history;
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'short' });
+        }
+
+        function updateStats() {
+            document.getElementById('statTotal').textContent = packages.length;
+            document.getElementById('statTransit').textContent = packages.filter(p => ['transit', 'customs', 'out'].includes(p.status)).length;
+            document.getElementById('statDelivered').textContent = packages.filter(p => p.status === 'delivered').length;
+            document.getElementById('statPending').textContent = packages.filter(p => ['pending', 'picked'].includes(p.status)).length;
+        }
+
+        function loadShipments() {
+            const list = document.getElementById('shipmentsList');
+            list.innerHTML = '';
+            
+            packages.forEach(pkg => {
+                const div = document.createElement('div');
+                div.className = 'shipment-item';
+                div.innerHTML = `
+                    <div class="shipment-info">
+                        <h4>${pkg.id}</h4>
+                        <p>${pkg.customer} • ${pkg.origin} → ${pkg.destination} • ${pkg.currentLocation}</p>
+                    </div>
+                    <div class="shipment-actions">
+                        <button class="btn-icon btn-link" onclick="copyLink('${pkg.id}')" title="Copy Link">
+                            <i class="fas fa-link"></i>
+                        </button>
+                        <button class="btn-icon btn-edit" onclick="editShipment('${pkg.id}')" title="Edit">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn-icon btn-delete" onclick="deleteShipment('${pkg.id}')" title="Delete">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                list.appendChild(div);
+            });
+        }
+
+        function copyLink(id) {
+            const link = `${window.location.origin}/index.html?track=${id}`;
+            navigator.clipboard.writeText(link).then(() => {
+                alert('Tracking link copied to clipboard!');
+            });
+        }
+
+        function editShipment(id) {
+            const pkg = packages.find(p => p.id === id);
+            if (!pkg) return;
+            
+            document.getElementById('editId').value = id;
+            document.getElementById('editStatus').value = pkg.status;
+            updateEditLocations();
+            document.getElementById('editLocation').value = pkg.currentLocation;
+            document.getElementById('editModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('editModal').classList.remove('active');
+        }
+
+        function saveEdit() {
+            const id = document.getElementById('editId').value;
+            const pkg = packages.find(p => p.id === id);
+            
+            if (pkg) {
+                const oldStatus = pkg.status;
+                pkg.status = document.getElementById('editStatus').value;
+                pkg.currentLocation = document.getElementById('editLocation').value;
+                pkg.locationDetail = generateLocationDetail(pkg.status);
+                pkg.progress = calculateProgress(pkg.status);
+                
+                // Add history
+                const now = new Date();
+                const timeStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ', ' + 
+                               now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+                
+                pkg.history.unshift({
+                    time: timeStr,
+                    location: pkg.currentLocation,
+                    status: getStatusLabel(pkg.status),
+                    completed: pkg.status === 'delivered',
+                    note: document.getElementById('editNote').value || 'Status updated by admin'
+                });
+                
+                if (pkg.status === 'delivered') {
+                    pkg.estimatedDelivery = 'Delivered';
+                    pkg.deliveryTime = timeStr;
+                    pkg.route[pkg.route.length - 1].completed = true;
+                }
+                
+                savePackages();
+                updateStats();
+                loadShipments();
+                closeModal();
+                
+                alert(`Shipment ${id} updated successfully!`);
+            }
+        }
+
+        function getStatusLabel(status) {
+            const labels = {
+                pending: 'Pending Pickup',
+                picked: 'Picked Up',
+                facility: 'At Facility',
+                transit: 'In Transit',
+                customs: 'Customs Clearance',
+                local: 'At Local Facility',
+                out: 'Out for Delivery',
+                delivered: 'Delivered'
+            };
+            return labels[status] || status;
+        }
+
+        function deleteShipment(id) {
+            if (confirm('Are you sure you want to delete this shipment?')) {
+                packages = packages.filter(p => p.id !== id);
+                savePackages();
+                updateStats();
+                loadShipments();
+            }
+        }
+
+        function searchShipments() {
+            const term = document.getElementById('searchInput').value.toLowerCase();
+            const items = document.querySelectorAll('.shipment-item');
+            
+            items.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(term) ? 'flex' : 'none';
+            });
+        }
+
+        function savePackages() {
+            localStorage.setItem('worldlink_packages', JSON.stringify(packages));
+            // Also update for customer page
+            localStorage.setItem('worldlink_global_packages', JSON.stringify(packages));
+        }
+    </script>
+</body>
+</html>
