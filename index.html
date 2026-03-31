@@ -2100,9 +2100,8 @@
     <script type="text/javascript">
         var _smartsupp = _smartsupp || {};
         _smartsupp.key = "3f03de012a5dd2143faf87caa5659e2a893fb88c";
-        // If you used a specific registered domain in SmartSupp settings, set it explicitly.
-        // Default behavior is to use the current host; we avoid overrides that may mismatch on Netlify.
-        // _smartsupp.domain = window.location.hostname;
+        // Replace this with your Netlify site domain or custom domain exactly as set in SmartSupp settings:
+        _smartsupp.domain = "your-project.netlify.app"; // <-- UPDATE this value
 
         window.smartsupp || (function(d) {
             var s, c, o = smartsupp = function(){ o._.push(arguments); }; o._ = [];
@@ -2114,6 +2113,13 @@
             c.src = 'https://www.smartsuppchat.com/loader.js';
             s.parentNode.insertBefore(c, s);
         })(document);
+    </script>
+    <script>
+        setTimeout(function() {
+            console.log('Smartsupp debug: _smartsupp=', _smartsupp);
+            console.log('Smartsupp debug: window.smartsupp=', window.smartsupp);
+            console.log('Smartsupp debug: loader script present=', !!document.querySelector('script[src*="smartsuppchat.com/loader.js"]'));
+        }, 2000);
     </script>
     <noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
 </body>
