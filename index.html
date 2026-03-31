@@ -2097,30 +2097,57 @@
         });
     </script>
         <!-- Smartsupp Live Chat script -->
-    <script type="text/javascript">
-        var _smartsupp = _smartsupp || {};
-        _smartsupp.key = "3f03de012a5dd2143faf87caa5659e2a893fb88c";
-        // Explicit Netlify host matching your deploy URL:
-        _smartsupp.domain = "securetrackpro.netlify.app";
-
-        window.smartsupp || (function(d) {
-            var s, c, o = smartsupp = function(){ o._.push(arguments); }; o._ = [];
-            s = d.getElementsByTagName('script')[0];
-            c = d.createElement('script');
-            c.type = 'text/javascript';
-            c.charset = 'utf-8';
-            c.async = true;
-            c.src = 'https://www.smartsuppchat.com/loader.js';
-            s.parentNode.insertBefore(c, s);
-        })(document);
-    </script>
     <script>
-        setTimeout(function() {
-            console.log('Smartsupp debug: _smartsupp=', _smartsupp);
-            console.log('Smartsupp debug: window.smartsupp=', window.smartsupp);
-            console.log('Smartsupp debug: loader script present=', !!document.querySelector('script[src*="smartsuppchat.com/loader.js"]'));
-        }, 2000);
+        (function() {
+            var host = 'securetrackpro.netlify.app';
+            var key = '3f03de012a5dd2143faf87caa5659e2a893fb88c';
+
+            window._smartsupp = window._smartsupp || {};
+            window._smartsupp.key = key;
+            window._smartsupp.domain = host;
+
+            function logState(note) {
+                console.log('[Smartsupp] ' + note);
+                console.log('  _smartsupp:', window._smartsupp);
+                console.log('  window.smartsupp:', window.smartsupp);
+                console.log('  domain (resolved):', window.location.hostname);
+            }
+
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.charset = 'utf-8';
+            script.async = true;
+            script.src = 'https://www.smartsuppchat.com/loader.js';
+
+            script.onload = function() {
+                logState('loader.js loaded successfully');
+                if (window.smartsupp) {
+                    console.log('[Smartsupp] widget is available, initializing chat...');
+                    window.smartsupp('toggle');
+                } else {
+                    console.warn('[Smartsupp] loader.js loaded but window.smartsupp is missing');
+                }
+            };
+
+            script.onerror = function(event) {
+                console.error('[Smartsupp] FAILED to load loader.js', event);
+                console.error('Check Netlify content security policy, adblock, or cross-domain restrictions');
+            };
+
+            var firstScript = document.getElementsByTagName('script')[0];
+            if (firstScript) {
+                firstScript.parentNode.insertBefore(script, firstScript);
+            } else {
+                document.head.appendChild(script);
+            }
+
+            setTimeout(function() {
+                logState('2s after injection');
+                console.log('Smartsupp loader script tag exists:', !!document.querySelector('script[src*="smartsuppchat.com/loader.js"]'));
+            }, 2000);
+        })();
     </script>
+    <noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
     <noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
 </body>
 </html>
