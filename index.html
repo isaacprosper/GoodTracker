@@ -2097,57 +2097,61 @@
         });
     </script>
         <!-- Smartsupp Live Chat script -->
-    <script>
-        (function() {
-            var host = 'securetrackpro.netlify.app';
-            var key = '3f03de012a5dd2143faf87caa5659e2a893fb88c';
+    <!-- Smartsupp Live Chat script -->
+<script>
+    (function() {
+        // Remove domain restriction - works on any host
+        var key = '3f03de012a5dd2143faf87caa5659e2a893fb88c';
 
-            window._smartsupp = window._smartsupp || {};
-            window._smartsupp.key = key;
-            window._smartsupp.domain = host;
+        window._smartsupp = window._smartsupp || {};
+        window._smartsupp.key = key;
+        // Remove the domain property entirely - let Smartsupp detect it automatically
 
-            function logState(note) {
-                console.log('[Smartsupp] ' + note);
-                console.log('  _smartsupp:', window._smartsupp);
-                console.log('  window.smartsupp:', window.smartsupp);
-                console.log('  domain (resolved):', window.location.hostname);
-            }
+        function logState(note) {
+            console.log('[Smartsupp] ' + note);
+            console.log('  _smartsupp:', window._smartsupp);
+            console.log('  window.smartsupp:', window.smartsupp);
+            console.log('  current domain:', window.location.hostname);
+        }
 
-            var script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.charset = 'utf-8';
-            script.async = true;
-            script.src = 'https://www.smartsuppchat.com/loader.js';
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.charset = 'utf-8';
+        script.async = true;
+        script.src = 'https://www.smartsuppchat.com/loader.js';
 
-            script.onload = function() {
-                logState('loader.js loaded successfully');
-                if (window.smartsupp) {
-                    console.log('[Smartsupp] widget is available, initializing chat...');
-                    window.smartsupp('toggle');
-                } else {
-                    console.warn('[Smartsupp] loader.js loaded but window.smartsupp is missing');
-                }
-            };
-
-            script.onerror = function(event) {
-                console.error('[Smartsupp] FAILED to load loader.js', event);
-                console.error('Check Netlify content security policy, adblock, or cross-domain restrictions');
-            };
-
-            var firstScript = document.getElementsByTagName('script')[0];
-            if (firstScript) {
-                firstScript.parentNode.insertBefore(script, firstScript);
+        script.onload = function() {
+            logState('loader.js loaded successfully');
+            if (window.smartsupp) {
+                console.log('[Smartsupp] widget is available, initializing...');
+                // Don't toggle - let it load normally
+                window.smartsupp('chat:open');
             } else {
-                document.head.appendChild(script);
+                console.warn('[Smartsupp] loader loaded but smartsupp object missing');
             }
+        };
 
-            setTimeout(function() {
-                logState('2s after injection');
-                console.log('Smartsupp loader script tag exists:', !!document.querySelector('script[src*="smartsuppchat.com/loader.js"]'));
-            }, 2000);
-        })();
-    </script>
-    <noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
-    <noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
+        script.onerror = function(event) {
+            console.error('[Smartsupp] Failed to load loader.js', event);
+            console.error('Check adblockers, CSP, or network issues');
+        };
+
+        // Insert before first script or append to head
+        var firstScript = document.getElementsByTagName('script')[0];
+        if (firstScript && firstScript.parentNode) {
+            firstScript.parentNode.insertBefore(script, firstScript);
+        } else {
+            document.head.appendChild(script);
+        }
+
+        // Debug check after 3 seconds
+        setTimeout(function() {
+            logState('3s after injection - checking if widget appeared');
+            var widget = document.getElementById('smartsupp-widget');
+            console.log('Widget element exists:', !!widget);
+        }, 3000);
+    })();
+</script>
+<noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
 </body>
 </html>
