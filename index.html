@@ -21,6 +21,7 @@
             --primary-orange: #ea580c;
             --light-orange: #f97316;
             --dark-orange: #c2410c;
+            --hold-red: #dc2626;
             --bg-light: #f8fafc;
             --text-dark: #1e293b;
             --text-muted: #64748b;
@@ -537,47 +538,7 @@
             box-shadow: 0 8px 30px rgba(0,0,0,0.1);
         }
 
-        /* Success Banner */
-        .success-banner {
-            background: linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%);
-            border-color: var(--primary-green);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1.5rem 2rem;
-        }
-
-        .success-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--primary-green);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.5rem;
-            animation: scaleIn 0.5s ease;
-        }
-
-        @keyframes scaleIn {
-            0% { transform: scale(0); }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); }
-        }
-
-        .success-text h3 {
-            color: var(--primary-green);
-            font-size: 1.25rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .success-text p {
-            color: var(--text-muted);
-            font-size: 0.875rem;
-        }
-
-        /* Status Card */
+        /* ON HOLD STATUS */
         .status-header {
             display: flex;
             align-items: center;
@@ -590,24 +551,24 @@
         .status-icon-large {
             width: 70px;
             height: 70px;
-            background: linear-gradient(135deg, var(--primary-green), var(--light-green));
+            background: linear-gradient(135deg, var(--hold-red), #ef4444);
             border-radius: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 2rem;
-            box-shadow: 0 10px 30px rgba(22, 163, 74, 0.2);
-            animation: pulseGlow 2s infinite;
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.2);
+            animation: pulseHold 2s infinite;
         }
 
-        @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 10px 30px rgba(22, 163, 74, 0.2); }
-            50% { box-shadow: 0 10px 40px rgba(22, 163, 74, 0.4); }
+        @keyframes pulseHold {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .status-info h2 {
-            color: var(--primary-green);
+            color: var(--hold-red);
             font-size: 1.5rem;
             margin-bottom: 0.25rem;
         }
@@ -615,6 +576,19 @@
         .status-info p {
             color: var(--text-muted);
             font-size: 0.9rem;
+        }
+
+        .hold-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--hold-red);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
         }
 
         .info-grid {
@@ -625,9 +599,9 @@
 
         .info-item {
             padding: 1.25rem;
-            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            background: linear-gradient(135deg, #fef2f2 0%, #ffffff 100%);
             border-radius: 1rem;
-            border-left: 4px solid var(--primary-orange);
+            border-left: 4px solid var(--hold-red);
             transition: all 0.3s ease;
         }
 
@@ -658,7 +632,7 @@
         .section-title {
             font-size: 1.25rem;
             font-weight: 700;
-            color: var(--primary-green);
+            color: var(--text-dark);
             margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
@@ -678,7 +652,7 @@
             top: 0;
             bottom: 0;
             width: 2px;
-            background: linear-gradient(to bottom, var(--primary-green), var(--primary-orange));
+            background: linear-gradient(to bottom, var(--primary-green), var(--hold-red));
             opacity: 0.2;
         }
 
@@ -694,10 +668,6 @@
         .step:nth-child(2) { animation-delay: 0.2s; }
         .step:nth-child(3) { animation-delay: 0.3s; }
         .step:nth-child(4) { animation-delay: 0.4s; }
-        .step:nth-child(5) { animation-delay: 0.5s; }
-        .step:nth-child(6) { animation-delay: 0.6s; }
-        .step:nth-child(7) { animation-delay: 0.7s; }
-        .step:nth-child(8) { animation-delay: 0.8s; }
 
         @keyframes fadeInLeft {
             from { opacity: 0; transform: translateX(-20px); }
@@ -727,17 +697,17 @@
             box-shadow: 0 4px 15px rgba(22, 163, 74, 0.3);
         }
 
-        .step.current .step-icon {
-            background: var(--primary-orange);
+        .step.hold .step-icon {
+            background: var(--hold-red);
             color: white;
             animation: pulseRing 2s infinite;
-            box-shadow: 0 4px 20px rgba(234, 88, 12, 0.4);
+            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
         }
 
         @keyframes pulseRing {
-            0% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.4); }
-            70% { box-shadow: 0 0 0 15px rgba(234, 88, 12, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0); }
+            0% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(220, 38, 38, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
         }
 
         .step.pending .step-icon {
@@ -761,8 +731,8 @@
             color: var(--primary-green);
         }
 
-        .step.current .step-title {
-            color: var(--primary-orange);
+        .step.hold .step-title {
+            color: var(--hold-red);
         }
 
         .step-location {
@@ -780,7 +750,7 @@
             font-weight: 500;
         }
 
-        /* Enhanced Map Section */
+        /* Map Section - UPDATED */
         .map-container {
             background: linear-gradient(135deg, #f0fdf4 0%, #fff7ed 100%);
             border-radius: 1.5rem;
@@ -790,31 +760,15 @@
             overflow: hidden;
         }
 
-        .map-container::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(22, 163, 74, 0.05) 0%, transparent 70%);
-            animation: floatMap 10s ease-in-out infinite;
-        }
-
-        @keyframes floatMap {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(-20px, 20px); }
-        }
-
         .route-wrapper {
             position: relative;
-            height: 280px;
+            height: 320px;
             margin: 2rem 0;
         }
 
         .route-path {
             position: absolute;
-            top: 50%;
+            top: 40%;
             left: 5%;
             right: 5%;
             height: 6px;
@@ -827,7 +781,7 @@
         .route-path-fill {
             height: 100%;
             width: 52%;
-            background: linear-gradient(90deg, var(--primary-green), var(--primary-orange));
+            background: linear-gradient(90deg, var(--primary-green), var(--hold-red));
             border-radius: 3px;
             position: relative;
             animation: fillRoute 1.5s ease-out;
@@ -835,12 +789,12 @@
 
         @keyframes fillRoute {
             from { width: 0%; }
-            to { width: 75%; }
+            to { width: 35%; }
         }
 
         .route-plane {
             position: absolute;
-            top: 50%;
+            top: 40%;
             left: 52%;
             transform: translate(-50%, -50%);
             width: 50px;
@@ -850,9 +804,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--primary-orange);
+            color: var(--hold-red);
             font-size: 1.25rem;
-            box-shadow: 0 4px 20px rgba(234, 88, 12, 0.3);
+            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.3);
             z-index: 10;
             animation: flyPlane 2s ease-in-out infinite;
         }
@@ -868,7 +822,7 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 3px solid var(--primary-orange);
+            border: 3px solid var(--hold-red);
             animation: ripple 2s infinite;
         }
 
@@ -879,7 +833,7 @@
 
         .route-node {
             position: absolute;
-            top: 50%;
+            top: 40%;
             transform: translateY(-50%);
             display: flex;
             flex-direction: column;
@@ -887,8 +841,15 @@
             gap: 0.75rem;
         }
 
-        .route-node.start { left: 5%; }
-        .route-node.end { right: 5%; }
+        .route-node.start { left: 0%; }
+        .route-node.end { right: 0%; }
+
+        /* Washington D.C. label below the hold icon */
+        .route-node.transit {
+            left: 45%;
+            top: 52%;
+            transform: translateX(-40%);
+        }
 
         .node-point {
             width: 24px;
@@ -900,15 +861,15 @@
             position: relative;
         }
 
-        .node-point.active {
-            border-color: var(--primary-orange);
-            background: var(--primary-orange);
+        .node-point.hold {
+            border-color: var(--hold-red);
+            background: var(--hold-red);
             animation: nodePulse 2s infinite;
         }
 
         @keyframes nodePulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(234, 88, 12, 0.4); }
-            50% { box-shadow: 0 0 0 10px rgba(234, 88, 12, 0); }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(220, 38, 38, 0); }
         }
 
         .node-label {
@@ -946,7 +907,7 @@
         .stat-value {
             font-size: 1.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, var(--primary-green), var(--primary-orange));
+            background: linear-gradient(135deg, var(--hold-red), var(--primary-orange));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -1365,11 +1326,11 @@
             position: fixed;
             bottom: 2rem;
             right: 2rem;
-            background: linear-gradient(135deg, var(--primary-green), var(--dark-green));
+            background: linear-gradient(135deg, var(--hold-red), #b91c1c);
             color: white;
             padding: 1.25rem 1.5rem;
             border-radius: 1rem;
-            box-shadow: 0 10px 30px rgba(22, 163, 74, 0.3);
+            box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
             display: none;
             align-items: center;
             gap: 0.75rem;
@@ -1443,7 +1404,7 @@
             }
 
             .route-wrapper {
-                height: 200px;
+                height: 280px;
             }
 
             .route-node {
@@ -1453,15 +1414,30 @@
                 flex-direction: row;
                 justify-content: center;
                 margin-top: 1rem;
+                width: fit-content;
+                
+            }
+
+            .route-node.transit {
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+                margin-top: 2rem;
             }
 
             .route-path {
-                top: 30%;
+                top: 25%;
             }
 
             .route-plane {
-                top: 30%;
+                top: 25%;
+                left: 45%;
             }
+            .route-node.end{ 
+                right: 0%;
+                 left: 50%;
+                 }
 
             .route-stats {
                 flex-direction: column;
@@ -1709,48 +1685,41 @@
             </div>
         </div>
 
-        <!-- Results -->
+        <!-- Results - MINIMAL ON HOLD -->
         <div class="results" id="results">
-            
-            <!-- Success Banner -->
-            <div class="card success-banner">
-                <div class="success-icon">
-                    <i class="fas fa-check"></i>
-                </div>
-                <div class="success-text">
-                    <h3>Authentication Successful</h3>
-                    <p>Displaying secure shipment data for TRK-USA-ZA-8842</p>
-                </div>
-            </div>
 
-            <!-- Status Overview -->
+            <!-- Status Overview - ON HOLD -->
             <div class="card">
                 <div class="status-header">
                     <div class="status-icon-large">
-                        <i class="fas fa-plane"></i>
+                        <i class="fas fa-hand-paper"></i>
                     </div>
                     <div class="status-info">
-                        <h2>Departed Origin Facility</h2>
+                        <h2>On Hold - Customs Inspection</h2>
                         <p>International Express Shipping • USA → South Africa</p>
+                        <span class="hold-badge">
+                            <i class="fas fa-exclamation-circle"></i>
+                            AWAITING CLEARANCE
+                        </span>
                     </div>
                 </div>
                 
                 <div class="info-grid">
                     <div class="info-item">
-                        <div class="info-label"><i class="fas fa-calendar"></i> Ship Date</div>
-                        <div class="info-value">Mar 30, 2026</div>
+                        <div class="info-label"><i class="fas fa-calendar"></i> Hold Date</div>
+                        <div class="info-value">April 3, 2026</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label"><i class="fas fa-clock"></i> Est. Delivery</div>
-                        <div class="info-value">April 8, 2026</div>
+                        <div class="info-label"><i class="fas fa-clock"></i> Est. Release</div>
+                        <div class="info-value">Pending Review</div>
                     </div>
                     <div class="info-item">
                         <div class="info-label"><i class="fas fa-weight"></i> Weight</div>
                         <div class="info-value">75.2 kg</div>
                     </div>
                     <div class="info-item">
-                        <div class="info-label"><i class="fas fa-box"></i> Service</div>
-                        <div class="info-value">Express International</div>
+                        <div class="info-label"><i class="fas fa-map-marker-alt"></i> Location</div>
+                        <div class="info-value">Washington D.C.</div>
                     </div>
                 </div>
             </div>
@@ -1758,7 +1727,7 @@
             <!-- Progress Steps -->
             <div class="card">
                 <div class="section-title">
-                    <i class="fas fa-check-circle"></i>
+                    <i class="fas fa-route"></i>
                     Shipment Progress
                 </div>
                 <div class="steps">
@@ -1786,28 +1755,20 @@
                             <div class="step-time">April 2, 2026 - 08:15 PM</div>
                         </div>
                     </div>
-                    <div class="step current">
-                        <div class="step-icon"><i class="fas fa-plane"></i></div>
+                    <div class="step hold">
+                        <div class="step-icon"><i class="fas fa-hand-paper"></i></div>
                         <div class="step-content">
-                            <div class="step-title">Main Transhipment base</div>
+                            <div class="step-title">On Hold - Customs Inspection</div>
                             <div class="step-location"><i class="fas fa-map-marker-alt"></i> Washington D.C, USA</div>
-                            <!-- <div class="step-time">Mar 22, 2026 - 06:45 AM</div> -->
-                        </div>
-                    </div>
-                   <!-- <div class="step current">
-                        <div class="step-icon"><i class="fas fa-plane"></i></div>
-                        <div class="step-content">
-                            <div class="step-title">In Transit to South Africa</div>
-                            <div class="step-location"><i class="fas fa-map-marker-alt"></i> Currently over Atlantic Ocean</div>
-                            <div class="step-time">Mar 23, 2026 - 11:30 AM (Est. arrival Johannesburg Mar 24)</div>
+                            <div class="step-time">April 3, 2026 - 09:45 AM</div>
                         </div>
                     </div>
                     <div class="step pending">
                         <div class="step-icon"><i class="fas fa-box"></i></div>
                         <div class="step-content">
-                            <div class="step-title">Arrived at Destination Country</div>
-                            <div class="step-location"><i class="fas fa-map-marker-alt"></i> OR Tambo Airport, Johannesburg, SA</div>
-                            <div class="step-time">Pending</div>
+                            <div class="step-title">In Transit to South Africa</div>
+                            <div class="step-location"><i class="fas fa-map-marker-alt"></i> En Route</div>
+                            <div class="step-time">Pending Clearance</div>
                         </div>
                     </div>
                     <div class="step pending">
@@ -1823,17 +1784,17 @@
                         <div class="step-content">
                             <div class="step-title">Delivered</div>
                             <div class="step-location"><i class="fas fa-map-marker-alt"></i> 9 Welcome Way, Hayfields, Pietermaritzburg</div>
-                            <div class="step-time">Expected: April 15, 2026</div>
-                        </div> -->
+                            <div class="step-time">Delayed</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Enhanced Map Section -->
+            <!-- Map Section - UPDATED: Washington D.C. in middle, South Africa at end -->
             <div class="card">
                 <div class="section-title">
                     <i class="fas fa-globe"></i>
-                    Live Shipping Route
+                    Current Location
                 </div>
                 <div class="map-container">
                     <div class="route-wrapper">
@@ -1841,6 +1802,7 @@
                             <div class="route-path-fill"></div>
                         </div>
                         
+                        <!-- Start: New York -->
                         <div class="route-node start">
                             <div class="node-point"></div>
                             <div class="node-label">
@@ -1849,12 +1811,23 @@
                             </div>
                         </div>
 
+                        <!-- Middle: Washington D.C. (ON HOLD position) -->
                         <div class="route-plane">
-                            <i class="fas fa-plane"></i>
+                            <i class="fas fa-hand-paper"></i>
                         </div>
 
+                        <!-- Washington D.C. Label -->
+                        <div class="route-node transit">
+                            <div class="node-point hold"></div>
+                            <div class="node-label">
+                                <div class="node-city" style="color: var(--hold-red);">Washington D.C.</div>
+                                <div class="node-country">ON HOLD</div>
+                            </div>
+                        </div>
+
+                        <!-- End: South Africa -->
                         <div class="route-node end">
-                            <div class="node-point active"></div>
+                            <div class="node-point"></div>
                             <div class="node-label">
                                 <div class="node-city">Pietermaritzburg</div>
                                 <div class="node-country">South Africa</div>
@@ -1864,15 +1837,15 @@
 
                     <div class="route-stats">
                         <div class="stat">
-                            <div class="stat-value">121 km</div>
-                            <div class="stat-label">km traveled</div>
+                            <div class="stat-value">865 km</div>
+                            <div class="stat-label">traveled</div>
                         </div>
                         <div class="stat">
-                            <div class="stat-value">52%</div>
-                            <div class="stat-label">complete</div>
+                            <div class="stat-value">HALTED</div>
+                            <div class="stat-label">status</div>
                         </div>
                         <div class="stat">
-                            <div class="stat-value">6 days</div>
+                            <div class="stat-value">12,800 km</div>
                             <div class="stat-label">remaining</div>
                         </div>
                     </div>
@@ -1887,7 +1860,7 @@
                     </div>
                     <div class="recipient-info">
                         <h3>Recipient Details</h3>
-                        <p>Secure Delivery Information</p>
+                        <p>Delivery Pending Clearance</p>
                     </div>
                 </div>
                 
@@ -1969,8 +1942,8 @@
     </footer>
 
     <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i>
-        <span>Access granted! Shipment details unlocked.</span>
+        <i class="fas fa-exclamation-circle"></i>
+        <span>Shipment ON HOLD - Customs inspection required.</span>
     </div>
     
     <script>
@@ -2065,7 +2038,7 @@
                     toast.classList.add('show');
                     setTimeout(function() {
                         toast.classList.remove('show');
-                    }, 3000);
+                    }, 4000);
                     
                     // Scroll to results
                     setTimeout(function() {
@@ -2096,62 +2069,54 @@
             }
         });
     </script>
-        <!-- Smartsupp Live Chat script -->
     <!-- Smartsupp Live Chat script -->
-<script>
-    (function() {
-        // Remove domain restriction - works on any host
-        var key = '3f03de012a5dd2143faf87caa5659e2a893fb88c';
+    <script>
+        (function() {
+            var key = '3f03de012a5dd2143faf87caa5659e2a893fb88c';
 
-        window._smartsupp = window._smartsupp || {};
-        window._smartsupp.key = key;
-        // Remove the domain property entirely - let Smartsupp detect it automatically
+            window._smartsupp = window._smartsupp || {};
+            window._smartsupp.key = key;
 
-        function logState(note) {
-            console.log('[Smartsupp] ' + note);
-            console.log('  _smartsupp:', window._smartsupp);
-            console.log('  window.smartsupp:', window.smartsupp);
-            console.log('  current domain:', window.location.hostname);
-        }
-
-        var script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.charset = 'utf-8';
-        script.async = true;
-        script.src = 'https://www.smartsuppchat.com/loader.js';
-
-        script.onload = function() {
-            logState('loader.js loaded successfully');
-            if (window.smartsupp) {
-                console.log('[Smartsupp] widget is available, initializing...');
-                // Don't toggle - let it load normally
-                window.smartsupp('chat:open');
-            } else {
-                console.warn('[Smartsupp] loader loaded but smartsupp object missing');
+            function logState(note) {
+                console.log('[Smartsupp] ' + note);
+                console.log('  _smartsupp:', window._smartsupp);
+                console.log('  window.smartsupp:', window.smartsupp);
+                console.log('  current domain:', window.location.hostname);
             }
-        };
 
-        script.onerror = function(event) {
-            console.error('[Smartsupp] Failed to load loader.js', event);
-            console.error('Check adblockers, CSP, or network issues');
-        };
+            var script = document.createElement('script');
+            script.type = 'text/javascript';
+            script.charset = 'utf-8';
+            script.async = true;
+            script.src = 'https://www.smartsuppchat.com/loader.js';
 
-        // Insert before first script or append to head
-        var firstScript = document.getElementsByTagName('script')[0];
-        if (firstScript && firstScript.parentNode) {
-            firstScript.parentNode.insertBefore(script, firstScript);
-        } else {
-            document.head.appendChild(script);
-        }
+            script.onload = function() {
+                logState('loader.js loaded successfully');
+                if (window.smartsupp) {
+                    console.log('[Smartsupp] widget is available, initializing...');
+                } else {
+                    console.warn('[Smartsupp] loader loaded but smartsupp object missing');
+                }
+            };
 
-        // Debug check after 3 seconds
-        setTimeout(function() {
-            logState('3s after injection - checking if widget appeared');
-            var widget = document.getElementById('smartsupp-widget');
-            console.log('Widget element exists:', !!widget);
-        }, 3000);
-    })();
-</script>
-<noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
+            script.onerror = function(event) {
+                console.error('[Smartsupp] Failed to load loader.js', event);
+            };
+
+            var firstScript = document.getElementsByTagName('script')[0];
+            if (firstScript && firstScript.parentNode) {
+                firstScript.parentNode.insertBefore(script, firstScript);
+            } else {
+                document.head.appendChild(script);
+            }
+
+            setTimeout(function() {
+                logState('3s after injection - checking if widget appeared');
+                var widget = document.getElementById('smartsupp-widget');
+                console.log('Widget element exists:', !!widget);
+            }, 3000);
+        })();
+    </script>
+    <noscript>Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a></noscript>
 </body>
 </html>
